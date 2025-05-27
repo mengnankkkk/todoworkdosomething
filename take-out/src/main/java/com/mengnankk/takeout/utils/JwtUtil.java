@@ -37,12 +37,12 @@ public class JwtUtil {
     }
 
     //for retrieving any information from token we will need the secret key
-    private Claims getAllClaimsFromToken(String token) {
+    public Claims getAllClaimsFromToken(String token) {
         return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
     }
 
     //check if the token has expired
-    private Boolean isTokenExpired(String token) {
+    public Boolean isTokenExpired(String token) {
         final Date expiration = getExpirationDateFromToken(token);
         return expiration.before(new Date());
     }
@@ -67,18 +67,25 @@ public class JwtUtil {
     }
 
     //validate token
+    //validate token with username
     public Boolean validateToken(String token, String username) {
         final String usernameFromToken = getUsernameFromToken(token);
         return (usernameFromToken.equals(username) && !isTokenExpired(token));
     }
 
-    public Boolean validateToken(String token) {
+    //validate token without checking username, useful for filter before loading UserDetails
+    public Boolean isTokenSignatureValid(String token) {
         try {
             Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
-            return !isTokenExpired(token);
+            return true;
         } catch (Exception e) {
-            // MalformedJwtException, ExpiredJwtException, UnsupportedJwtException, IllegalArgumentException
+            // MalformedJwtException, ExpiredJwtException, UnsupportedJwtException, IllegalArgumentException, SignatureException
             return false;
         }
+    }
+
+    // Combined validation: checks signature and expiration
+    public Boolean validateToken(String token) {
+        return isTokenSignatureValid(token) && !isTokenExpired(token);
     }
 }
