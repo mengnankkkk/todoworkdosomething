@@ -1,0 +1,44 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: shopping
+  # Redis配置
+  redis:
+    host: localhost
+    port: 6379
+    database: 0
+    # 连接池配置
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 0
+        max-wait: -1ms
+
+# JWT配置
+jwt:
+  # JWT加密密钥
+  secret: shopping-secret-key-for-jwt-token-signature
+  # 访问令牌有效期（10分钟，单位：秒）
+  access-token-expiration: 600
+  # 刷新令牌有效期（7天，单位：秒）
+  refresh-token-expiration: 604800
+  # 令牌请求头名称
+  token-header: Authorization
+  # 令牌前缀
+  token-prefix: "Bearer "
+
+# Swagger配置
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/**'
+      packages-to-scan: com.mengnankk.shopping.controller 

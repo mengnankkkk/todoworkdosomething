@@ -1,5 +1,7 @@
 package com.mengnankk.designpattern;
 
+import org.omg.PortableInterceptor.INACTIVE;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
@@ -23,3 +25,4 @@ public class RequestLogFilter implements Filter {
         // 资源释放逻辑（可选）
     }
 }
+
