@@ -20,9 +20,9 @@ spring:
 # JWT配置
 jwt:
   # JWT加密密钥
-  secret: shopping-secret-key-for-jwt-token-signature
-  # 访问令牌有效期（10分钟，单位：秒）
-  access-token-expiration: 600
+  secret: your-secret-key
+  # 访问令牌有效期（24小时，单位：毫秒）
+  expiration: 86400000
   # 刷新令牌有效期（7天，单位：秒）
   refresh-token-expiration: 604800
   # 令牌请求头名称
